@@ -1,0 +1,63 @@
+campaign:
+  client: Equify Financial
+  episode: "CS 67"
+  title: "The Hidden Cash Inside Your Equipment Fleet"
+  series: The Construction Show
+  host: Jerrod Downey
+  guest: Patrick Hoiby, CEO
+  report_date: "2026-07-31"
+  landing_page: https://www.crownsmen.com/equify-financial-construction-equipment-financing/
+
+youtube:
+  main_episode:
+    url: https://youtu.be/RZMgRG6HlB4
+    video_id: RZMgRG6HlB4
+    type: main
+  clips:
+    - url: https://youtu.be/-y_KlhcE80k
+      video_id: "-y_KlhcE80k"
+      type: clip
+    - url: https://youtu.be/cb6VcOTrP0w
+      video_id: cb6VcOTrP0w
+      type: clip
+
+social:
+  linkedin:
+    - url: https://www.linkedin.com/posts/crownsmen-partners_construction-financing-videoproduction-activity-7465509214887620608-0KPJ
+      account: Crownsmen Partners
+    - url: https://www.linkedin.com/posts/the-construction-show_construction-financing-videoproduction-activity-7465509590617567233-kFXM
+      account: The Construction Show
+  facebook:
+    - url: https://web.facebook.com/crownsmenp/posts/pfbid037SHi69ck3KU6RorEvGyRTTPVfgkre7MSaYGqLnwSMR1ZmbGu9GxkzfeHAboVopnYl
+      account: Crownsmen Partners
+  instagram:
+    - url: https://www.instagram.com/p/DY23oP2EyRY/
+      account: "@crownsmenp"
+  threads:
+    - url: https://www.threads.com/@crownsmenp/post/DY21qIfE1Wl
+      account: "@crownsmenp"
+  twitter:
+    - url: https://x.com/CrownsmenP/status/2059746127554261099
+      account: "@CrownsmenP"
+
+podcast:
+  - platform: Spotify
+    url: https://open.spotify.com/episode/7HThkUd9VXWB6YlVPhWMyf?si=4pK9_mMxTUa5PLQazCMBPg
+  - platform: Apple Podcasts
+    url: https://podcasts.apple.com/us/podcast/cs-67-equify-financial-the-hidden-cash-inside-your/id1365112754?i=1000769959116
+  - platform: Amazon Music
+    url: https://music.amazon.com/podcasts/c29d9c84-881d-4839-9bc4-d0d799cd3f3d/episodes/1ff7e9f5-6893-408a-897d-35ef4b6ec88f
+  - platform: Rumble
+    url: https://rumble.com/v7ahm0u-equify-financial-the-hidden-cash-inside-your-equipment-fleet-67.html
+
+analytics:
+  utm_campaign: crownsmen
+  landing_page: https://www.crownsmen.com/equify-financial-construction-equipment-financing/
+  client_site: https://equifyfinancial.com
+
+integrations:
+  constant_contact: true
+  google_ads: true
+  google_analytics: true
+  youtube_data_api: true
+  youtube_analytics_api: true
