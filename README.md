@@ -25,9 +25,14 @@ The build script pulls metrics from:
 - **YouTube** — oEmbed + page scrape (+ YouTube Data API if `YOUTUBE_API_KEY` is set)
 - **LinkedIn, Facebook, Instagram, Threads, X** — public page scrape (limited without API keys)
 - **Spotify, Apple Podcasts, Amazon Music, Rumble** — oEmbed / page metadata
-- **Constant Contact** — Zapier MCP (requires authentication in Cursor desktop)
-- **Google Ads** — API credentials or `GOOGLE_ADS_METRICS_FILE` JSON export
-- **UTM / Landing Page Analytics** — GA4 API or `GA_METRICS_FILE` JSON export
+- **Constant Contact, Google Ads, GA4** — **Zapier MCP via Desktop Cursor** → `output/zapier/*.json`
+- Direct API env vars (see below) as fallback
+
+### Zapier MCP (Constant Contact, Google Ads, GA4)
+
+Cloud Agents cannot access your Desktop Zapier connection. To pull authenticated
+metrics, run the report build in **Desktop Cursor** where Zapier MCP is connected.
+See `output/zapier/README.md` for the exact prompt to paste.
 
 Metrics that can't be pulled automatically appear as **[TBD]** in the deck and are listed in `output/missing_data.md`.
 

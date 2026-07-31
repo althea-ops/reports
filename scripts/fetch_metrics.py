@@ -352,15 +352,41 @@ def fetch_rumble(url: str) -> MetricResult:
     return result
 
 
-def fetch_constant_contact(campaign: dict[str, Any]) -> dict[str, Any]:
-    """Attempt Constant Contact metrics via env vars or Zapier MCP output file."""
-    data: dict[str, Any] = {"source": "constant_contact", "status": "missing"}
-    cc_file = os.environ.get("CONSTANT_CONTACT_METRICS_FILE")
-    if cc_file and Path(cc_file).exists():
-        data = json.loads(Path(cc_file).read_text())
-        data["status"] = "ok"
-        return data
+def _load_json_file(path: Path) -> dict[str, Any] | None:
+    if path.exists():
+        try:
+            return json.loads(path.read_text())
+        except (json.JSONDecodeError, OSError):
+            return None
+    return None
 
+
+def _load_zapier_file(name: str) -> dict[str, Any] | None:
+    """Load metrics written by Desktop Cursor agent via Zapier MCP."""
+    zapier_dir = Path(os.environ.get("ZAPIER_METRICS_DIR", "output/zapier"))
+    return _load_json_file(zapier_dir / name)
+
+
+def fetch_constant_contact(campaign: dict[str, Any]) -> dict[str, Any]:
+    """Constant Contact metrics: Zapier MCP export → env file → API keys."""
+    data: dict[str, Any] = {"source": "constant_contact", "status": "missing"}
+
+    # 1. Zapier MCP pull (written by desktop agent to output/zapier/)
+    zapier = _load_zapier_file("constant_contact.json")
+    if zapier and zapier.get("status") != "error":
+        zapier["source"] = "constant_contact_via_zapier"
+        zapier["status"] = "ok"
+        return zapier
+
+    # 2. Explicit env file override
+    cc_file = os.environ.get("CONSTANT_CONTACT_METRICS_FILE")
+    if cc_file:
+        loaded = _load_json_file(Path(cc_file))
+        if loaded:
+            loaded["status"] = "ok"
+            return loaded
+
+    # 3. Direct API credentials
     cc_api_key = os.environ.get("CONSTANT_CONTACT_API_KEY")
     cc_token = os.environ.get("CONSTANT_CONTACT_ACCESS_TOKEN")
     if cc_api_key and cc_token:
@@ -368,24 +394,40 @@ def fetch_constant_contact(campaign: dict[str, Any]) -> dict[str, Any]:
         data["error"] = "Constant Contact API credentials present but campaign lookup not configured"
         return data
 
-    data["error"] = "Constant Contact via Zapier MCP requires authentication in Cursor desktop"
+    data["error"] = (
+        "Constant Contact: Zapier MCP not available in cloud agent. "
+        "Run in Desktop Cursor (where Zapier is connected) to pull via "
+        "execute_zapier_read_action, save to output/zapier/constant_contact.json, "
+        "then rebuild."
+    )
     return data
 
 
 def fetch_google_ads(campaign: dict[str, Any]) -> dict[str, Any]:
     data: dict[str, Any] = {"source": "google_ads", "status": "missing"}
+
+    zapier = _load_zapier_file("google_ads.json")
+    if zapier and zapier.get("status") != "error":
+        zapier["source"] = "google_ads_via_zapier"
+        zapier["status"] = "ok"
+        return zapier
+
     ads_file = os.environ.get("GOOGLE_ADS_METRICS_FILE")
-    if ads_file and Path(ads_file).exists():
-        data = json.loads(Path(ads_file).read_text())
-        data["status"] = "ok"
-        return data
+    if ads_file:
+        loaded = _load_json_file(Path(ads_file))
+        if loaded:
+            loaded["status"] = "ok"
+            return loaded
 
     if os.environ.get("GOOGLE_ADS_DEVELOPER_TOKEN"):
         data["status"] = "partial"
         data["error"] = "Google Ads credentials present but campaign ID not configured"
         return data
 
-    data["error"] = "Google Ads API credentials not available in cloud agent environment"
+    data["error"] = (
+        "Google Ads: Zapier MCP not available in cloud agent. "
+        "Pull via Zapier in Desktop Cursor → output/zapier/google_ads.json"
+    )
     return data
 
 
@@ -396,11 +438,19 @@ def fetch_analytics(campaign: dict[str, Any], config: dict[str, Any]) -> dict[st
         "landing_page": config.get("analytics", {}).get("landing_page"),
         "utm_campaign": config.get("analytics", {}).get("utm_campaign"),
     }
+
+    zapier = _load_zapier_file("google_analytics.json")
+    if zapier and zapier.get("status") != "error":
+        zapier["source"] = "google_analytics_via_zapier"
+        zapier["status"] = "ok"
+        return zapier
+
     ga_file = os.environ.get("GA_METRICS_FILE")
-    if ga_file and Path(ga_file).exists():
-        data = json.loads(Path(ga_file).read_text())
-        data["status"] = "ok"
-        return data
+    if ga_file:
+        loaded = _load_json_file(Path(ga_file))
+        if loaded:
+            loaded["status"] = "ok"
+            return loaded
 
     property_id = os.environ.get("GA4_PROPERTY_ID")
     if property_id and os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"):
@@ -408,7 +458,10 @@ def fetch_analytics(campaign: dict[str, Any], config: dict[str, Any]) -> dict[st
         data["error"] = "GA4 credentials present but UTM report query not configured"
         return data
 
-    data["error"] = "Client analytics for UTM clicks requires GA4 API or authenticated access"
+    data["error"] = (
+        "GA4/UTM analytics: Zapier MCP not available in cloud agent. "
+        "Pull via Zapier in Desktop Cursor → output/zapier/google_analytics.json"
+    )
     return data
 
 
