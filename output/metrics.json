@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-31T17:50:58.497964+00:00",
+  "fetched_at": "2026-07-31T17:55:47.098334+00:00",
   "campaign": {
     "client": "Equify Financial",
     "episode": "CS 67",
@@ -15,7 +15,7 @@
       "platform": "YouTube",
       "url": "https://youtu.be/RZMgRG6HlB4",
       "title": "Equify Financial: The Hidden Cash Inside Your Equipment Fleet #67",
-      "views": 52894,
+      "views": 52900,
       "likes": null,
       "comments": null,
       "shares": null,
@@ -81,6 +81,59 @@
       }
     }
   ],
+  "youtube_analytics": {
+    "RZMgRG6HlB4": {
+      "video_id": "RZMgRG6HlB4",
+      "title": null,
+      "video_views": 52900,
+      "average_percentage_viewed": null,
+      "average_view_duration": null,
+      "average_view_duration_sec": null,
+      "watch_time_hours": null,
+      "pct_watched_25": null,
+      "pct_watched_50": null,
+      "pct_watched_90": null,
+      "geography": [],
+      "geography_totals": {},
+      "source": "missing",
+      "status": "partial",
+      "error": "YouTube Analytics API requires OAuth (YOUTUBE_OAUTH_TOKEN_FILE or GOOGLE_APPLICATION_CREDENTIALS)"
+    },
+    "-y_KlhcE80k": {
+      "video_id": "-y_KlhcE80k",
+      "title": null,
+      "video_views": 2104,
+      "average_percentage_viewed": null,
+      "average_view_duration": null,
+      "average_view_duration_sec": null,
+      "watch_time_hours": null,
+      "pct_watched_25": null,
+      "pct_watched_50": null,
+      "pct_watched_90": null,
+      "geography": [],
+      "geography_totals": {},
+      "source": "missing",
+      "status": "partial",
+      "error": "YouTube Analytics API requires OAuth (YOUTUBE_OAUTH_TOKEN_FILE or GOOGLE_APPLICATION_CREDENTIALS)"
+    },
+    "cb6VcOTrP0w": {
+      "video_id": "cb6VcOTrP0w",
+      "title": null,
+      "video_views": 1617,
+      "average_percentage_viewed": null,
+      "average_view_duration": null,
+      "average_view_duration_sec": null,
+      "watch_time_hours": null,
+      "pct_watched_25": null,
+      "pct_watched_50": null,
+      "pct_watched_90": null,
+      "geography": [],
+      "geography_totals": {},
+      "source": "missing",
+      "status": "partial",
+      "error": "YouTube Analytics API requires OAuth (YOUTUBE_OAUTH_TOKEN_FILE or GOOGLE_APPLICATION_CREDENTIALS)"
+    }
+  },
   "social": [
     {
       "platform": "LinkedIn",
@@ -290,24 +343,28 @@
   "email": {
     "source": "constant_contact",
     "status": "missing",
-    "error": "Constant Contact via Zapier MCP requires authentication in Cursor desktop"
+    "error": "Constant Contact: Zapier MCP not available in cloud agent. Run in Desktop Cursor (where Zapier is connected) to pull via execute_zapier_read_action, save to output/zapier/constant_contact.json, then rebuild."
   },
   "google_ads": {
     "source": "google_ads",
     "status": "missing",
-    "error": "Google Ads API credentials not available in cloud agent environment"
+    "error": "Google Ads: Zapier MCP not available in cloud agent. Pull via Zapier in Desktop Cursor \u2192 output/zapier/google_ads.json"
   },
   "analytics": {
     "source": "google_analytics",
     "status": "missing",
     "landing_page": "https://www.crownsmen.com/equify-financial-construction-equipment-financing/",
     "utm_campaign": "crownsmen",
-    "error": "Client analytics for UTM clicks requires GA4 API or authenticated access"
+    "error": "GA4/UTM analytics: Zapier MCP not available in cloud agent. Pull via Zapier in Desktop Cursor \u2192 output/zapier/google_analytics.json"
   },
   "missing": [
-    "YouTube likes/comments for https://youtu.be/RZMgRG6HlB4",
-    "YouTube likes/comments for https://youtu.be/-y_KlhcE80k",
-    "YouTube likes/comments for https://youtu.be/cb6VcOTrP0w",
+    "YouTube Analytics: Average Percentage Viewed (YouTube Analytics API / Zapier)",
+    "YouTube Analytics: Average View Duration (YouTube Analytics API / Zapier)",
+    "YouTube Analytics: Watch Time Hours (YouTube Analytics API / Zapier)",
+    "YouTube Analytics: % viewers watching 25% or more (YouTube Analytics API / Zapier)",
+    "YouTube Analytics: % viewers watching 50% or more (YouTube Analytics API / Zapier)",
+    "YouTube Analytics: % viewers watching 90% or more (YouTube Analytics API / Zapier)",
+    "YouTube Analytics: Geography breakdown by country (YouTube Analytics API / Zapier)",
     "Facebook (Crownsmen Partners): reactions, comments, shares, reach (Facebook Graph API)",
     "Instagram (@crownsmenp): likes, comments, reach, saves (Instagram Graph API)",
     "Threads (@crownsmenp): likes, replies, views (Meta API)",
@@ -316,8 +373,7 @@
     "Apple Podcasts (https://podcasts.apple.com/us/podcast/cs-67-equify-financial-the-hidden-cash-inside-your/id1365112754?i=1000769959116): plays/downloads (platform analytics)",
     "Amazon Music (https://music.amazon.com/podcasts/c29d9c84-881d-4839-9bc4-d0d799cd3f3d/episodes/1ff7e9f5-6893-408a-897d-35ef4b6ec88f): plays/downloads (platform analytics)",
     "Rumble (https://rumble.com/v7ahm0u-equify-financial-the-hidden-cash-inside-your-equipment-fleet-67.html): views (Rumble creator dashboard)",
-    "Constant Contact email metrics: sends, opens, clicks, bounces, unsubscribes (Zapier MCP \u2014 authenticate in Cursor desktop)",
-    "Google Ads metrics: impressions, clicks, CTR, cost, conversions (Google Ads API credentials)",
-    "Landing page UTM click analytics for crownsmen.com/equify-financial-* (GA4 / client analytics dashboard)"
+    "Constant Contact via Zapier: Successful Deliveries, Opens, Open Rate, Clicks",
+    "Google Ads via Zapier: Clicks to URL, Landing Page URL"
   ]
 }

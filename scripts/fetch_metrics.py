@@ -51,6 +51,7 @@ class CampaignMetrics:
     fetched_at: str
     campaign: dict[str, Any]
     youtube: list[MetricResult] = field(default_factory=list)
+    youtube_analytics: dict[str, Any] = field(default_factory=dict)
     social: list[MetricResult] = field(default_factory=list)
     podcast: list[MetricResult] = field(default_factory=list)
     email: dict[str, Any] = field(default_factory=dict)
@@ -468,11 +469,29 @@ def fetch_analytics(campaign: dict[str, Any], config: dict[str, Any]) -> dict[st
 def collect_missing(metrics: CampaignMetrics) -> list[str]:
     missing: list[str] = []
 
+    # YouTube Analytics (main episode priority)
+    main_id = next(
+        (y.extra.get("video_id") for y in metrics.youtube if y.extra.get("type") == "main"),
+        None,
+    )
+    ya = metrics.youtube_analytics.get(main_id, {}) if main_id else {}
+    yt_analytics_fields = [
+        ("average_percentage_viewed", "Average Percentage Viewed"),
+        ("average_view_duration", "Average View Duration"),
+        ("watch_time_hours", "Watch Time Hours"),
+        ("pct_watched_25", "% viewers watching 25% or more"),
+        ("pct_watched_50", "% viewers watching 50% or more"),
+        ("pct_watched_90", "% viewers watching 90% or more"),
+    ]
+    for key, label in yt_analytics_fields:
+        if ya.get(key) is None:
+            missing.append(f"YouTube Analytics: {label} (YouTube Analytics API / Zapier)")
+    if main_id and not ya.get("geography"):
+        missing.append("YouTube Analytics: Geography breakdown by country (YouTube Analytics API / Zapier)")
+
     for yt in metrics.youtube:
         if yt.views is None:
-            missing.append(f"YouTube views/likes/comments for {yt.url} (YouTube Analytics API)")
-        elif yt.likes is None:
-            missing.append(f"YouTube likes/comments for {yt.url}")
+            missing.append(f"YouTube Video Views for {yt.url}")
 
     for soc in metrics.social:
         if soc.status != "ok":
@@ -498,21 +517,29 @@ def collect_missing(metrics: CampaignMetrics) -> list[str]:
 
     if metrics.email.get("status") != "ok":
         missing.append(
-            "Constant Contact email metrics: sends, opens, clicks, bounces, unsubscribes "
-            "(Zapier MCP — authenticate in Cursor desktop)"
+            "Constant Contact via Zapier: Successful Deliveries, Opens, Open Rate, Clicks"
         )
+    else:
+        for field, label in [
+            ("successful_deliveries", "Successful Deliveries"),
+            ("opens", "Opens"),
+            ("open_rate", "Open Rate"),
+            ("clicks", "Clicks"),
+        ]:
+            if metrics.email.get(field) is None and metrics.email.get("delivered") is None and field == "successful_deliveries":
+                missing.append(f"Constant Contact: {label}")
+            elif field != "successful_deliveries" and metrics.email.get(field) is None and metrics.email.get(f"unique_{field}") is None:
+                if field == "opens" and metrics.email.get("unique_opens") is None:
+                    missing.append(f"Constant Contact: {label}")
+                elif field == "clicks" and metrics.email.get("unique_clicks") is None:
+                    missing.append(f"Constant Contact: {label}")
+                elif field == "open_rate" and metrics.email.get("open_rate") is None:
+                    missing.append(f"Constant Contact: {label}")
 
     if metrics.google_ads.get("status") != "ok":
-        missing.append(
-            "Google Ads metrics: impressions, clicks, CTR, cost, conversions "
-            "(Google Ads API credentials)"
-        )
-
-    if metrics.analytics.get("status") != "ok":
-        missing.append(
-            "Landing page UTM click analytics for crownsmen.com/equify-financial-* "
-            "(GA4 / client analytics dashboard)"
-        )
+        missing.append("Google Ads via Zapier: Clicks to URL, Landing Page URL")
+    elif not metrics.google_ads.get("url_clicks") and not metrics.google_ads.get("ads"):
+        missing.append("Google Ads via Zapier: Clicks to URL, Landing Page URL")
 
     return missing
 
@@ -580,6 +607,15 @@ def fetch_all(config_path: str | Path) -> CampaignMetrics:
     metrics.email = fetch_constant_contact(campaign)
     metrics.google_ads = fetch_google_ads(campaign)
     metrics.analytics = fetch_analytics(campaign, config)
+
+    # YouTube Analytics (watch time, retention, geography)
+    from youtube_analytics import analytics_to_dict, fetch_youtube_analytics
+
+    video_ids = [y.extra.get("video_id") for y in metrics.youtube if y.extra.get("video_id")]
+    views_map = {y.extra["video_id"]: y.views for y in metrics.youtube if y.extra.get("video_id")}
+    yt_analytics = fetch_youtube_analytics(video_ids, views_fallback=views_map)
+    metrics.youtube_analytics = analytics_to_dict(yt_analytics)
+
     metrics.missing = collect_missing(metrics)
 
     return metrics

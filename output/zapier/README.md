@@ -1,58 +1,53 @@
-# Zapier MCP Metrics (Desktop Cursor)
+# Zapier MCP — Pull Exact Metrics
 
-Cloud Agents **cannot access your Desktop Zapier MCP connection**. Your Zapier
-integrations (Constant Contact, Google Ads, Google Analytics) are authenticated
-in **Desktop Cursor**, not in the isolated cloud VM.
+Cloud Agents cannot access your Desktop Zapier connection. Run this in **Desktop Cursor**.
 
-## Quick fix — run in Desktop Cursor
-
-1. Open this repo in **Desktop Cursor** (not Cloud Agent)
-2. Start a new Agent chat locally
-3. Paste this prompt:
+## Paste this prompt in Desktop Cursor Agent
 
 ```
-Pull campaign metrics for Equify Financial CS 67 via Zapier MCP and rebuild the report.
+Pull these exact metrics for Equify Financial CS 67 via Zapier MCP and rebuild the report.
 
-1. Call list_enabled_zapier_actions to see my connected tools.
-2. Use execute_zapier_read_action for:
-   - Constant Contact → email campaign stats (sends, opens, clicks, bounces)
-   - Google Ads → campaign performance (impressions, clicks, CTR, cost, conversions)
-   - Google Analytics → UTM clicks for crownsmen.com/equify-financial-construction-equipment-financing/
-3. Save results to output/zapier/constant_contact.json, google_ads.json, google_analytics.json
-4. Run: python3 scripts/build_report.py links.yaml -o output
-5. Commit and push the updated report.
+1. Call list_enabled_zapier_actions first.
+
+2. YOUTUBE ANALYTICS (video RZMgRG6HlB4) — save to output/zapier/youtube_analytics.json:
+   - Video Views
+   - Average Percentage Viewed
+   - Average View Duration
+   - Watch Time Hours
+   - % viewers watching 25% or more
+   - % viewers watching 50% or more
+   - % viewers watching 90% or more
+   - Geography table: country, views, avg view duration, watch time + TOTAL row
+
+3. CONSTANT CONTACT (via Zapier) — save to output/zapier/constant_contact.json:
+   - Successful Deliveries
+   - Opens
+   - Open Rate
+   - Clicks
+
+4. GOOGLE ADS (via Zapier) — save to output/zapier/google_ads.json:
+   - Clicks to URL
+   - Landing Page URL (per ad/campaign)
+
+5. Rebuild: python3 scripts/build_report.py links.yaml -o output
+6. Commit and push.
 ```
 
-The desktop agent has your Zapier auth and will fill in all `[TBD]` slides.
+## JSON schemas
 
-## Expected JSON files
+See `scripts/zapier_fetch.py` for exact field names expected by the report builder.
 
-| File | Zapier source | Slides updated |
-|------|---------------|----------------|
-| `constant_contact.json` | Constant Contact read actions | Slide 7 (Email) |
-| `google_ads.json` | Google Ads read actions | Slide 9 (Paid Media) |
-| `google_analytics.json` | GA4 read actions | Slide 8 (Website/UTM) |
-| `youtube_analytics.json` | YouTube Analytics (optional) | Slide 3 enrichment |
+| File | Key fields |
+|------|------------|
+| `youtube_analytics.json` | `video_views`, `average_percentage_viewed`, `average_view_duration`, `watch_time_hours`, `pct_watched_25/50/90`, `geography[]`, `geography_totals` |
+| `constant_contact.json` | `successful_deliveries`, `opens`, `open_rate`, `clicks` |
+| `google_ads.json` | `ads[].clicks_to_url`, `ads[].landing_page_url` |
 
-See `scripts/zapier_fetch.py` for the expected JSON schema.
+## Current status (public scrape only)
 
-## Why cloud agents can't see Zapier
-
-When I tried to call Zapier MCP from this cloud run:
-
-```
-serverStatus: "needsAuth"
-Interactive MCP authentication is only available in the Cursor desktop IDE
-```
-
-Your Zapier connection lives in Desktop Cursor's MCP session. Cloud agents run
-in a separate VM without that session.
-
-## Manual alternative
-
-If you prefer, export metrics from Zapier manually and place JSON files here.
-Then re-run:
-
-```bash
-python3 scripts/build_report.py links.yaml -o output
-```
+| Metric | Value |
+|--------|-------|
+| YouTube Video Views (main) | 52,895 |
+| YouTube Analytics (retention, geography) | [TBD] — needs YouTube Analytics API |
+| Constant Contact | [TBD] — needs Zapier in Desktop Cursor |
+| Google Ads | [TBD] — needs Zapier in Desktop Cursor |
