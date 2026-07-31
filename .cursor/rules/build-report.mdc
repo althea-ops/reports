@@ -1,0 +1,84 @@
+---
+description: When the user asks to build, update, or generate the campaign report, automatically pull all metrics via Zapier MCP and rebuild the deck.
+alwaysApply: true
+---
+
+# Campaign Report — Auto Build
+
+When the user asks to **build the report**, **update the report**, **generate the report**, or similar:
+
+## Do this automatically (no questions unless a write action needs confirmation)
+
+### 1. Check Zapier MCP
+- Call `list_enabled_zapier_actions` (Agentic) or list Classic action tools
+- If Zapier is not connected, call `mcp_auth` or tell user: Settings → Tools & MCP → Connect Zapier, then retry
+
+### 2. Pull metrics via Zapier (reads — just do it)
+
+**Constant Contact** → save `output/zapier/constant_contact.json`:
+```json
+{
+  "status": "ok",
+  "successful_deliveries": <number>,
+  "opens": <number>,
+  "open_rate": <percent as float, e.g. 24.5>,
+  "clicks": <number>,
+  "campaign_name": "...",
+  "subject_line": "..."
+}
+```
+Search for Equify Financial / CS 67 campaign.
+
+**Google Ads** → save `output/zapier/google_ads.json`:
+```json
+{
+  "status": "ok",
+  "clicks": <total>,
+  "impressions": <number>,
+  "ctr": <float>,
+  "cost": <float>,
+  "ads": [
+    {
+      "name": "campaign or ad name",
+      "clicks_to_url": <number>,
+      "landing_page_url": "https://www.crownsmen.com/equify-financial-construction-equipment-financing/"
+    }
+  ]
+}
+```
+
+**YouTube Analytics** (video `RZMgRG6HlB4`) → save `output/zapier/youtube_analytics.json`:
+```json
+{
+  "status": "ok",
+  "videos": {
+    "RZMgRG6HlB4": {
+      "video_views": <number>,
+      "average_percentage_viewed": <float>,
+      "average_view_duration": "MM:SS",
+      "watch_time_hours": <float>,
+      "pct_watched_25": <float>,
+      "pct_watched_50": <float>,
+      "pct_watched_90": <float>,
+      "geography": [
+        {"country": "US", "views": 0, "average_view_duration": "0:00", "watch_time_hours": 0.0}
+      ],
+      "geography_totals": {"views": 0, "watch_time_hours": 0.0, "average_view_duration": "0:00", "countries": 0}
+    }
+  }
+}
+```
+
+Use YouTube Analytics / YouTube read actions if enabled in Zapier. Otherwise use any available YouTube tool.
+
+### 3. Build the report
+```bash
+pip install -r requirements.txt
+python3 scripts/build_report.py links.yaml -o output
+```
+
+### 4. Tell the user where the files are
+- `output/Crownsmen_Partners_Campaign_Performance_Report__CS_67_-_Equify_Financial.pptx`
+- `output/Crownsmen_Partners_Campaign_Performance_Report__CS_67_-_Equify_Financial.pdf`
+
+Do NOT ask the user to manually edit JSON or run multiple commands. Do it all in one go.
