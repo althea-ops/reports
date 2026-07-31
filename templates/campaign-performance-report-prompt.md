@@ -41,27 +41,23 @@ For each link in `episode_launch` and `event_promotion`, visit/fetch the URL and
 
 ---
 
-### STEP 2 — Build the 10-slide deck
+### STEP 2 — Build PowerPoint + PDF (required deliverables)
 
-Use `data/collected.json` to populate this exact structure:
+Run the one-command builder — it produces **both** a `.pptx` and a `.pdf`:
 
-| Slide | Title | Auto-filled from |
-|-------|-------|------------------|
-| 1 | Cover | `report.year`, `report.date_created`, today's date if blank |
-| 2 | Report Content | Static: "Episode Performance 01" |
-| 3 | Promotional Links - Episode Launch | All URLs from `episode_launch_links` |
-| 4 | Promotional Links - Event | `event_promotion[]` — infer **Remarks** from cross-posting patterns in the sample (same platforms listed per content type) |
-| 5 | Episode Performance | `report.episode_number` |
-| 6 | YouTube \| Full Episode Statistics | `youtube_full.*` |
-| 7 | YouTube \| Highlight Episode Statistics | `youtube_highlight.*` (no watch time hours) |
-| 8 | YouTube \| Geography | `youtube_full.geography` — bar chart top 10 countries |
-| 9 | Email Marketing + One-Click Conversion | `email_marketing.*` + `one_click_conversion.*` |
-| 10 | Thank You | Static Crownsmen footer |
-
-Run:
 ```bash
-python3 scripts/generate_report.py data/collected.json output/[Client]_Campaign_Performance_Report.pptx
+python3 scripts/build_report.py links.yaml -o output
 ```
+
+Outputs in `output/`:
+- `[Client]_Campaign_Performance_Report_MN_[Episode]_Crownsmen_Partners.pptx` — editable PowerPoint
+- `[Client]_Campaign_Performance_Report_MN_[Episode]_Crownsmen_Partners.pdf` — client-ready PDF (same layout)
+- `collected.json` — all fetched metrics
+- `missing_data.md` — anything still needed from APIs
+
+The PDF must match the sample deck structure (10 slides). If PDF conversion fails, install LibreOffice and re-run.
+
+Use this **exact slide order**:
 
 ---
 
@@ -75,9 +71,10 @@ python3 scripts/generate_report.py data/collected.json output/[Client]_Campaign_
 
 ### DELIVERABLES
 
-1. `data/collected.json` — all fetched metrics with `source` field per metric
-2. Completed `.pptx`
-3. `missing_data.md` — anything that could not be pulled from links/APIs and exactly how to fix it (e.g. add `YOUTUBE_API_KEY`)
+1. **`output/*.pptx`** — editable PowerPoint presentation (10 slides)
+2. **`output/*.pdf`** — same presentation exported as PDF for the client
+3. `output/collected.json` — all fetched metrics with sources
+4. `output/missing_data.md` — gaps that need API credentials
 
 Execute all steps now. Start by reading `links.yaml` and pulling data from every URL.
 
