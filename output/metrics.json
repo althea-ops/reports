@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-31T17:55:47.098334+00:00",
+  "fetched_at": "2026-07-31T18:02:18.624092+00:00",
   "campaign": {
     "client": "Equify Financial",
     "episode": "CS 67",
@@ -8,7 +8,12 @@
     "host": "Jerrod Downey",
     "guest": "Patrick Hoiby, CEO",
     "report_date": "2026-07-31",
-    "landing_page": "https://www.crownsmen.com/equify-financial-construction-equipment-financing/"
+    "landing_page": "https://www.crownsmen.com/equify-financial-construction-equipment-financing/",
+    "email_search_terms": [
+      "Equify",
+      "CS 67"
+    ],
+    "google_ads_campaign": "Equify"
   },
   "youtube": [
     {
@@ -343,12 +348,12 @@
   "email": {
     "source": "constant_contact",
     "status": "missing",
-    "error": "Constant Contact: Zapier MCP not available in cloud agent. Run in Desktop Cursor (where Zapier is connected) to pull via execute_zapier_read_action, save to output/zapier/constant_contact.json, then rebuild."
+    "error": "Add CONSTANT_CONTACT_ACCESS_TOKEN to Cursor Cloud Secrets (see SECRETS_SETUP.md) for fully automated email metrics."
   },
   "google_ads": {
     "source": "google_ads",
     "status": "missing",
-    "error": "Google Ads: Zapier MCP not available in cloud agent. Pull via Zapier in Desktop Cursor \u2192 output/zapier/google_ads.json"
+    "error": "Add Google Ads secrets to Cursor Cloud Secrets (see SECRETS_SETUP.md) for fully automated ad metrics."
   },
   "analytics": {
     "source": "google_analytics",

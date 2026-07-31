@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Any
@@ -102,8 +103,11 @@ def fetch_via_youtube_analytics_api(
     token_path = os.environ.get("YOUTUBE_OAUTH_TOKEN_FILE") or os.environ.get("GOOGLE_OAUTH_TOKEN_FILE")
     creds_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
     client_secrets = os.environ.get("YOUTUBE_CLIENT_SECRETS_FILE")
+    yt_refresh = os.environ.get("YOUTUBE_REFRESH_TOKEN")
+    yt_client_id = os.environ.get("YOUTUBE_CLIENT_ID")
+    yt_client_secret = os.environ.get("YOUTUBE_CLIENT_SECRET")
 
-    if not any([token_path, creds_path, client_secrets, os.environ.get("YOUTUBE_REFRESH_TOKEN")]):
+    if not any([token_path, creds_path, client_secrets, yt_refresh, os.environ.get("YOUTUBE_REFRESH_TOKEN")]):
         for vid in video_ids:
             results[vid] = YouTubeVideoAnalytics(
                 video_id=vid,
@@ -128,6 +132,14 @@ def fetch_via_youtube_analytics_api(
         if token_path and Path(token_path).exists():
             token_data = json.loads(Path(token_path).read_text())
             creds = Credentials.from_authorized_user_info(token_data)
+        elif yt_refresh and yt_client_id and yt_client_secret:
+            creds = Credentials(
+                None,
+                refresh_token=yt_refresh,
+                token_uri="https://oauth2.googleapis.com/token",
+                client_id=yt_client_id,
+                client_secret=yt_client_secret,
+            )
         else:
             from google.oauth2.credentials import Credentials as C
             creds = C(
