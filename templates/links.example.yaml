@@ -1,0 +1,48 @@
+# Copy to links.yaml and fill in for each new episode.
+# Only links + basic metadata required — metrics are pulled automatically.
+
+report:
+  year: 2026
+  date_created: "07/17/2026"  # MM/DD/YYYY
+  client_name: "ProspEx Group"
+  show: "Mining NOW"
+  episode_number: 360
+
+episode_launch:
+  youtube_full: "https://youtu.be/h8460qMiK1M"
+  youtube_highlight: "https://youtu.be/x8vKSSXCzck"
+  linkedin_crownsmen: "https://www.linkedin.com/feed/update/urn:li:activity:7468050250084151299"
+  linkedin_mining_now: "https://www.linkedin.com/feed/update/urn:li:activity:7468050163564060672"
+  facebook: "https://www.facebook.com/crownsmenp/posts/pfbid0gBgLrginrovnJQV7e2aXLppeYGzKTacgw8nqUL4wrwy3JXrjgCu67X5vogxRN1UVl"
+  instagram: "https://www.instagram.com/p/DZI6XXLk3oc/"
+  threads: "https://www.threads.com/@crownsmenp/post/DZI5F8wE3Yk"
+  x_twitter: "https://x.com/CrownsmenP/status/2062286677910180009"
+  spotify: "https://spotifycreators-web.app.link/e/XTUUZOhgG3b"
+  rumble: "https://rumble.com/v7arwbs-prospex-pp.html"
+  crownsmen_website: "https://www.crownsmen.com/prospex-group-mining-royalties-digital-investment/"
+  apple_podcasts: "https://podcasts.apple.com/us/podcast/mn-360-prospex-group-modernizing-how-people-invest/id1365112754"
+  linkedin_newsletter: "https://www.linkedin.com/pulse/prospex-group-modernizes-investment-mining-fractional-nafsc/"
+  email: "https://myemail.constantcontact.com/ProspEx-Group--Unlocking-Mining-Royalties-for-a-New-Generation-of-Investors.html"
+
+event_promotion:
+  - content_type: "Email (Filming Schedule)"
+    link: "https://myemail.constantcontact.com/We-re-Live-at-PDAC---Mining-NOW-Is-Filming.html"
+    remarks: "—"
+  - content_type: "Post (Filming Schedule)"
+    link: "https://www.instagram.com/p/DVWilgPk8MC/"
+    remarks: "Posted also on Facebook, LinkedIn (Crownsmen Partners, Host Page, Show Page), X (Twitter), Threads, Instagram"
+  - content_type: "Behind-the-Scenes Images"
+    link: "https://www.instagram.com/p/DVZcp4vAcmb/"
+    remarks: "Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, Instagram"
+  - content_type: "Coming Soon Reel"
+    link: "https://youtube.com/shorts/eA4g4aDOLGs"
+    remarks: "Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, TikTok, Instagram"
+
+one_click_conversion:
+  tracking_url: "https://app.prospexgroup.com.au/?utm_source=Crownsmen+Partners&utm_medium=Episode&utm_campaign=One+Click+Conversion"
+
+# Optional: attach YouTube Studio CSV exports if Analytics API is not configured
+# youtube_studio_exports:
+#   full_episode_analytics: "exports/full-episode-analytics.csv"
+#   highlight_analytics: "exports/highlight-analytics.csv"
+#   geography: "exports/geography.csv"

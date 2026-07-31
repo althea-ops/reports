@@ -1,0 +1,99 @@
+{
+  "report": {
+    "year": 2026,
+    "date_created": "07/17/2026",
+    "client_name": "ProspEx Group",
+    "show": "Mining NOW",
+    "episode_number": 360
+  },
+  "episode_launch_links": {
+    "YouTube (Full Episode)": "https://youtu.be/h8460qMiK1M",
+    "YouTube (Highlight)": "https://youtu.be/x8vKSSXCzck",
+    "LinkedIn \u2013 Crownsmen Partners": "https://www.linkedin.com/feed/update/urn:li:activity:7468050250084151299",
+    "LinkedIn \u2013 Mining Now": "https://www.linkedin.com/feed/update/urn:li:activity:7468050163564060672",
+    "Facebook": "https://www.facebook.com/crownsmenp/posts/pfbid0gBgLrginrovnJQV7e2aXLppeYGzKTacgw8nqUL4wrwy3JXrjgCu67X5vogxRN1UVl",
+    "Instagram": "https://www.instagram.com/p/DZI6XXLk3oc/",
+    "Threads": "https://www.threads.com/@crownsmenp/post/DZI5F8wE3Yk",
+    "X (Twitter)": "https://x.com/CrownsmenP/status/2062286677910180009",
+    "Spotify": "https://spotifycreators-web.app.link/e/XTUUZOhgG3b",
+    "Rumble": "https://rumble.com/v7arwbs-prospex-pp.html",
+    "Crownsmen Website": "https://www.crownsmen.com/prospex-group-mining-royalties-digital-investment/",
+    "Apple Podcasts": "https://podcasts.apple.com/us/podcast/mn-360-prospex-group-modernizing-how-people-invest/id1365112754",
+    "LinkedIn Newsletter": "https://www.linkedin.com/pulse/prospex-group-modernizes-investment-mining-fractional-nafsc/",
+    "Email": "https://myemail.constantcontact.com/ProspEx-Group--Unlocking-Mining-Royalties-for-a-New-Generation-of-Investors.html"
+  },
+  "event_promotion": [
+    {
+      "content_type": "Email (Filming Schedule)",
+      "link": "https://myemail.constantcontact.com/We-re-Live-at-PDAC---Mining-NOW-Is-Filming.html",
+      "remarks": "\u2014"
+    },
+    {
+      "content_type": "Post (Filming Schedule)",
+      "link": "https://www.instagram.com/p/DVWilgPk8MC/",
+      "remarks": "Posted also on Facebook, LinkedIn (Crownsmen Partners, Host Page, Show Page), X (Twitter), Threads, Instagram"
+    },
+    {
+      "content_type": "Behind-the-Scenes Images",
+      "link": "https://www.instagram.com/p/DVZcp4vAcmb/",
+      "remarks": "Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, Instagram"
+    },
+    {
+      "content_type": "Coming Soon Reel",
+      "link": "https://youtube.com/shorts/eA4g4aDOLGs",
+      "remarks": "Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, TikTok, Instagram"
+    }
+  ],
+  "youtube_full": {
+    "url": "https://youtu.be/h8460qMiK1M",
+    "video_id": "h8460qMiK1M",
+    "title": "ProspEx Group: Modernizing Investment in Mining with Fractional Royalties #360",
+    "view_count": null,
+    "duration_seconds": null,
+    "average_percentage_viewed": null,
+    "average_view_duration": null,
+    "watch_time_hours": null,
+    "pct_25_plus": null,
+    "pct_50_plus": null,
+    "pct_90_plus": null,
+    "geography": [],
+    "source": "unavailable",
+    "notes": "Public view count unavailable without YOUTUBE_API_KEY. Retention/geography require YOUTUBE_OAUTH_TOKEN_PATH (YouTube Analytics API)."
+  },
+  "youtube_highlight": {
+    "url": "https://youtu.be/x8vKSSXCzck",
+    "video_id": "x8vKSSXCzck",
+    "title": "The Future of Mining Royalties with ProspEx Group\u2019s Digital Investment Platform",
+    "view_count": null,
+    "duration_seconds": null,
+    "average_percentage_viewed": null,
+    "average_view_duration": null,
+    "watch_time_hours": null,
+    "pct_25_plus": null,
+    "pct_50_plus": null,
+    "pct_90_plus": null,
+    "geography": [],
+    "source": "unavailable",
+    "notes": "Public view count unavailable without YOUTUBE_API_KEY. Retention/geography require YOUTUBE_OAUTH_TOKEN_PATH (YouTube Analytics API)."
+  },
+  "email_marketing": {
+    "url": "https://myemail.constantcontact.com/ProspEx-Group--Unlocking-Mining-Royalties-for-a-New-Generation-of-Investors.html",
+    "successful_deliveries": null,
+    "opens": null,
+    "open_rate": null,
+    "clicks": null,
+    "source": "unavailable",
+    "notes": "Constant Contact campaign stats require API auth. Connect Constant Contact in Zapier MCP or paste stats from CC dashboard."
+  },
+  "one_click_conversion": {
+    "tracking_url": "https://app.prospexgroup.com.au/?utm_source=Crownsmen+Partners&utm_medium=Episode&utm_campaign=One+Click+Conversion",
+    "total_clicks": null,
+    "notes": "Click totals require client analytics (GA4, HubSpot, etc.) \u2014 not available from URL alone."
+  },
+  "collection_notes": [
+    "Titles and public view counts: YouTube Data API (YOUTUBE_API_KEY).",
+    "Retention, watch time, geography: YouTube Analytics API (YOUTUBE_OAUTH_TOKEN_PATH).",
+    "Email stats: Constant Contact API / Zapier MCP.",
+    "Conversion clicks: client analytics dashboard."
+  ]
+}

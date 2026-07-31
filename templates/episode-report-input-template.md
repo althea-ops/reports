@@ -1,65 +1,45 @@
-# Episode Report — Input Template
+# Episode links only — metrics are pulled automatically by the scripts.
 
-Fill this in and paste below the prompt in Cursor (or attach as `@episode-report-input-template.md`).
+Copy `templates/links.example.yaml` to `links.yaml` and update URLs for each new episode.
 
-```
-Report year: 2026
-Date created: 
-Client name: 
-Episode show: Mining NOW
-Episode number: #
-Episode title: 
-Highlight title: 
+```yaml
+report:
+  year: 2026
+  date_created: "MM/DD/YYYY"
+  client_name: "Client Name"
+  show: "Mining NOW"
+  episode_number: 000
 
---- Promotional Links: Episode Launch ---
-YouTube (Full Episode): 
-YouTube (Highlight): 
-LinkedIn – Crownsmen Partners: 
-LinkedIn – Mining Now: 
-Facebook: 
-Instagram: 
-Threads: 
-X (Twitter): 
-Spotify: 
-Rumble: 
-Crownsmen Website: 
-Apple Podcasts: 
-LinkedIn Newsletter: 
-Email: 
+episode_launch:
+  youtube_full: ""
+  youtube_highlight: ""
+  linkedin_crownsmen: ""
+  linkedin_mining_now: ""
+  facebook: ""
+  instagram: ""
+  threads: ""
+  x_twitter: ""
+  spotify: ""
+  rumble: ""
+  crownsmen_website: ""
+  apple_podcasts: ""
+  linkedin_newsletter: ""
+  email: ""
 
---- Promotional Links: Event ---
-Email (Filming Schedule):  | —
-Post (Filming Schedule):  | Posted also on Facebook, LinkedIn (Crownsmen Partners, Host Page, Show Page), X (Twitter), Threads, Instagram
-Behind-the-Scenes Images:  | Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, Instagram
-Coming Soon Reel:  | Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, TikTok, Instagram
+event_promotion:
+  - content_type: "Email (Filming Schedule)"
+    link: ""
+    remarks: "—"
+  - content_type: "Post (Filming Schedule)"
+    link: ""
+    remarks: "Posted also on Facebook, LinkedIn (Crownsmen Partners, Host Page, Show Page), X (Twitter), Threads, Instagram"
+  - content_type: "Behind-the-Scenes Images"
+    link: ""
+    remarks: "Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, Instagram"
+  - content_type: "Coming Soon Reel"
+    link: ""
+    remarks: "Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, TikTok, Instagram"
 
---- YouTube: Full Episode ---
-Video Views: 
-Average Percentage Viewed: 
-Average View Duration: 
-Watch Time Hours: 
-25%+: 
-50%+: 
-90%+: 
-
---- YouTube: Highlight ---
-Video Views: 
-Average Percentage Viewed: 
-Average View Duration: 
-25%+: 
-50%+: 
-90%+: 
-
---- YouTube Geography ---
-[Paste from YouTube Studio Analytics → Reach → Geography]
-
---- Email Marketing ---
-Successful Deliveries: 
-Opens: 
-Open Rate: 
-Clicks: 
-
---- One-Click Conversion ---
-Tracking URL: 
-Total Clicks to Website: 
+one_click_conversion:
+  tracking_url: ""
 ```

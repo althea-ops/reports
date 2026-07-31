@@ -1,121 +1,102 @@
-# Cursor Prompt: Crownsmen Partners Campaign Performance Report
+# Cursor Prompt — Link-Driven Crownsmen Campaign Performance Report
 
-Copy everything below the line into Cursor each time you generate a new client episode report. Fill in the `[INPUTS]` section first, attach your reference PDF if needed, and run.
+**You only provide links.** Cursor pulls data from those URLs and builds the 10-slide deck.
+
+Attach:
+- `@templates/links.example.yaml` (or your filled-in `links.yaml`)
+- `@Crownsmen_Partners_Campaign_Performance_Report__MN_360_-_Prospex_Group-compressed.pdf` (format reference)
 
 ---
 
 ## PROMPT START — copy from here
 
-You are generating a **Crownsmen Partners Campaign Performance Report** for a client episode promotion. Match the structure, tone, and layout of the attached sample report exactly:
+Generate a **Crownsmen Partners Campaign Performance Report** by pulling all available data from the promotional links below. Do not ask me to manually enter view counts or analytics — fetch them yourself.
 
-**Reference format:** `@Crownsmen_Partners_Campaign_Performance_Report__MN_360_-_Prospex_Group-compressed.pdf`
+**Format reference:** `@Crownsmen_Partners_Campaign_Performance_Report__MN_360_-_Prospex_Group-compressed.pdf`
+
+**Links file:** `@links.yaml`
 
 ---
 
-### CLIENT & EPISODE INPUTS (I will fill these in each time)
+### STEP 1 — Collect data from links (run this first)
 
+```bash
+pip install -r requirements.txt
+python3 scripts/collect_report_data.py links.yaml > data/collected.json
 ```
-Report year: [e.g. 2026]
-Date created: [MM/DD/YYYY]
-Client name: [e.g. ProspEx Group]
-Episode show: [e.g. Mining NOW / MN 360]
-Episode number: [e.g. #360]
-Episode title: [Full episode title]
-Highlight title: [YouTube highlight video title]
 
---- Promotional Links: Episode Launch (Platform → URL) ---
-YouTube (Full Episode):
-YouTube (Highlight):
-LinkedIn – Crownsmen Partners:
-LinkedIn – Mining Now:
-Facebook:
-Instagram:
-Threads:
-X (Twitter):
-Spotify:
-Rumble:
-Crownsmen Website:
-Apple Podcasts:
-LinkedIn Newsletter:
-Email:
+Then enrich the JSON by fetching anything the script could not get:
 
---- Promotional Links: Event (Content Type → Link → Remarks) ---
-Email (Filming Schedule): [URL] | [remarks or —]
-Post (Filming Schedule): [URL] | [where else it was posted]
-Behind-the-Scenes Images: [URL] | [where else it was posted]
-Coming Soon Reel: [URL] | [where else it was posted]
+| Data needed | How to pull it from the links |
+|-------------|-------------------------------|
+| YouTube video titles | Already from oEmbed / Data API |
+| YouTube view counts | `YOUTUBE_API_KEY` env var → YouTube Data API v3 |
+| YouTube retention (avg %, 25/50/90%, watch time, geography) | YouTube Analytics API (`YOUTUBE_OAUTH_TOKEN_PATH`) **or** export CSV from YouTube Studio for each video URL and parse it |
+| Email opens/clicks/deliveries | Constant Contact API via Zapier MCP (`execute_zapier_read_action` for Constant Contact campaign stats using the email link) **or** fetch from Constant Contact dashboard if connected |
+| One-click conversion clicks | Query client analytics for the UTM URL in `one_click_conversion.tracking_url` |
 
---- YouTube: Full Episode Statistics ---
-Video Views:
-Average Percentage Viewed:
-Average View Duration: [M:SS]
-Watch Time Hours:
-% of viewers watching 25% or more:
-% of viewers watching 50% or more:
-% of viewers watching 90% or more:
+For each link in `episode_launch` and `event_promotion`, visit/fetch the URL and capture any public metadata (title, view count, likes, publish date). Merge into `data/collected.json`.
 
---- YouTube: Highlight Episode Statistics ---
-Video Views:
-Average Percentage Viewed:
-Average View Duration: [M:SS]
-% of viewers watching 25% or more:
-% of viewers watching 50% or more:
-% of viewers watching 90% or more:
+**Do not invent numbers.** If a metric cannot be fetched, set it to `null` and list it in a `missing_data` array at the end.
 
---- YouTube Geography ---
-[Paste top countries/regions and view counts, or attach screenshot/export from YouTube Studio]
+---
 
---- Email Marketing ---
-Successful Deliveries:
-Opens:
-Open Rate:
-Clicks:
+### STEP 2 — Build the 10-slide deck
 
---- One-Click Conversion ---
-Tracking URL used:
-Total # Clicks to Website:
+Use `data/collected.json` to populate this exact structure:
+
+| Slide | Title | Auto-filled from |
+|-------|-------|------------------|
+| 1 | Cover | `report.year`, `report.date_created`, today's date if blank |
+| 2 | Report Content | Static: "Episode Performance 01" |
+| 3 | Promotional Links - Episode Launch | All URLs from `episode_launch_links` |
+| 4 | Promotional Links - Event | `event_promotion[]` — infer **Remarks** from cross-posting patterns in the sample (same platforms listed per content type) |
+| 5 | Episode Performance | `report.episode_number` |
+| 6 | YouTube \| Full Episode Statistics | `youtube_full.*` |
+| 7 | YouTube \| Highlight Episode Statistics | `youtube_highlight.*` (no watch time hours) |
+| 8 | YouTube \| Geography | `youtube_full.geography` — bar chart top 10 countries |
+| 9 | Email Marketing + One-Click Conversion | `email_marketing.*` + `one_click_conversion.*` |
+| 10 | Thank You | Static Crownsmen footer |
+
+Run:
+```bash
+python3 scripts/generate_report.py data/collected.json output/[Client]_Campaign_Performance_Report.pptx
 ```
 
 ---
 
-### OUTPUT REQUIREMENTS
+### DESIGN RULES
 
-Produce a **10-slide presentation** (PowerPoint `.pptx` preferred; if not possible, provide slide-by-slide markdown + a Python script using `python-pptx` to generate the file).
-
-Use this **exact slide order and content structure**:
-
-| Slide | Title | Content |
-|-------|-------|---------|
-| 1 | Cover | "Campaign Performance Report [YEAR]" · © 2018 Crownsmen Partners \| www.crownsmen.com \| info@crownsmen.com · Date Created [date] |
-| 2 | Report Content | "Episode Performance 01" (table of contents style) |
-| 3 | Promotional Links - Episode Launch | Two-column table: **Platform Name** \| **URL** (all 14 platforms listed above) |
-| 4 | Promotional Links - Event | Three-column table: **Content Type** \| **Link** \| **Remarks** |
-| 5 | Episode Performance | Section divider — "Episode Performance" with episode number |
-| 6 | YouTube \| Full Episode Statistics | Episode title as subtitle · Metrics table: Video Views, Average Percentage Viewed, Average View Duration, Watch Time Hours, % watching 25%+/50%+/90%+ |
-| 7 | YouTube \| Highlight Episode Statistics | Highlight title as subtitle · Same metrics except no Watch Time Hours |
-| 8 | YouTube \| Geography | Bar chart or table of top viewing countries/regions from the geography input |
-| 9 | Email Marketing + One-Click Conversion | Two sections on one slide: Email stats (Successful Deliveries, Opens, Open Rate, Clicks) · One-Click Conversion (URL Used, Total # Clicks to Website) |
-| 10 | Thank You | © 2018 Crownsmen Partners \| www.crownsmen.com \| info@crownsmen.com |
-
----
-
-### DESIGN & FORMATTING RULES
-
-- **Brand:** Crownsmen Partners — professional, clean, minimal. Match the sample deck's layout hierarchy (large section titles, metric labels left / values right).
-- **Tables:** Use clear headers. URLs must be full clickable links (not truncated in the source data file; truncate visually in slides only if needed).
-- **Numbers:** Use comma separators for thousands (e.g. 25,385). Percentages include the % symbol.
-- **Durations:** Format as `M:SS` (e.g. 5:34).
-- **Do not invent data.** If any input above is missing, leave a clearly marked `[TBD]` placeholder and list what's still needed at the end.
-- **File naming:** `[ClientName]_Campaign_Performance_Report_[ShowAbbrev]_[EpisodeNumber]_Crownsmen_Partners.pptx`
+- Match sample deck layout: metric label left, value right, comma-formatted numbers, durations as `M:SS`.
+- Footer on slides 1 & 10: `© 2018 Crownsmen Partners | www.crownsmen.com | info@crownsmen.com`
+- File name: `[ClientName]_Campaign_Performance_Report_MN_[EpisodeNumber]_Crownsmen_Partners.pptx`
 
 ---
 
 ### DELIVERABLES
 
-1. The completed `.pptx` file (or generation script + instructions to build it).
-2. A brief checklist of any `[TBD]` fields I still need to provide.
-3. Optional: export a PDF version if the toolchain supports it.
+1. `data/collected.json` — all fetched metrics with `source` field per metric
+2. Completed `.pptx`
+3. `missing_data.md` — anything that could not be pulled from links/APIs and exactly how to fix it (e.g. add `YOUTUBE_API_KEY`)
 
-Generate the report now using the inputs I provided above.
+Execute all steps now. Start by reading `links.yaml` and pulling data from every URL.
 
 ## PROMPT END
+
+---
+
+## One-time setup (enables full auto-pull)
+
+Add to your environment or `.env`:
+
+```bash
+# Public view counts + titles (free tier: https://console.cloud.google.com/apis/credentials)
+export YOUTUBE_API_KEY="your-key"
+
+# Retention, watch time, geography (one-time OAuth for @CrownsmenPartners channel)
+export YOUTUBE_OAUTH_TOKEN_PATH="/path/to/youtube-oauth-token.json"
+```
+
+For email stats, enable **Constant Contact → Get Campaign Stats** in Zapier MCP.
+
+For conversion clicks, connect the client's GA4 or analytics tool in Zapier MCP, or provide the dashboard export path in `links.yaml`.
