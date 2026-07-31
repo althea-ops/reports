@@ -369,17 +369,33 @@ def _load_zapier_file(name: str) -> dict[str, Any] | None:
 
 
 def fetch_constant_contact(campaign: dict[str, Any]) -> dict[str, Any]:
-    """Constant Contact metrics: Zapier MCP export → env file → API keys."""
+    """Constant Contact: API → Zapier file → env file."""
     data: dict[str, Any] = {"source": "constant_contact", "status": "missing"}
 
-    # 1. Zapier MCP pull (written by desktop agent to output/zapier/)
+    # 1. Direct API (fully automated in cloud when secret is set)
+    if os.environ.get("CONSTANT_CONTACT_ACCESS_TOKEN"):
+        try:
+            from integrations.constant_contact_api import fetch_campaign_metrics
+            search = campaign.get("email_search_terms") or ["Equify", "CS 67"]
+            cid = os.environ.get("CONSTANT_CONTACT_CAMPAIGN_ID")
+            result = fetch_campaign_metrics(campaign_id=cid, search_terms=search)
+            if result.get("status") == "ok":
+                return result
+            data["error"] = result.get("error", "Constant Contact API failed")
+            data["status"] = "error"
+            return data
+        except Exception as exc:
+            data["error"] = f"Constant Contact API: {exc}"
+            data["status"] = "error"
+            return data
+
+    # 2. Zapier MCP export file
     zapier = _load_zapier_file("constant_contact.json")
     if zapier and zapier.get("status") != "error":
         zapier["source"] = "constant_contact_via_zapier"
         zapier["status"] = "ok"
         return zapier
 
-    # 2. Explicit env file override
     cc_file = os.environ.get("CONSTANT_CONTACT_METRICS_FILE")
     if cc_file:
         loaded = _load_json_file(Path(cc_file))
@@ -387,25 +403,31 @@ def fetch_constant_contact(campaign: dict[str, Any]) -> dict[str, Any]:
             loaded["status"] = "ok"
             return loaded
 
-    # 3. Direct API credentials
-    cc_api_key = os.environ.get("CONSTANT_CONTACT_API_KEY")
-    cc_token = os.environ.get("CONSTANT_CONTACT_ACCESS_TOKEN")
-    if cc_api_key and cc_token:
-        data["status"] = "partial"
-        data["error"] = "Constant Contact API credentials present but campaign lookup not configured"
-        return data
-
     data["error"] = (
-        "Constant Contact: Zapier MCP not available in cloud agent. "
-        "Run in Desktop Cursor (where Zapier is connected) to pull via "
-        "execute_zapier_read_action, save to output/zapier/constant_contact.json, "
-        "then rebuild."
+        "Add CONSTANT_CONTACT_ACCESS_TOKEN to Cursor Cloud Secrets (see SECRETS_SETUP.md) "
+        "for fully automated email metrics."
     )
     return data
 
 
 def fetch_google_ads(campaign: dict[str, Any]) -> dict[str, Any]:
     data: dict[str, Any] = {"source": "google_ads", "status": "missing"}
+
+    # 1. Direct Google Ads API
+    if os.environ.get("GOOGLE_ADS_REFRESH_TOKEN"):
+        try:
+            from integrations.google_ads_api import fetch_ads_metrics
+            name_filter = campaign.get("google_ads_campaign") or "Equify"
+            result = fetch_ads_metrics(campaign_name_contains=name_filter)
+            if result.get("status") == "ok":
+                return result
+            data["error"] = result.get("error", "Google Ads API failed")
+            data["status"] = "error"
+            return data
+        except Exception as exc:
+            data["error"] = f"Google Ads API: {exc}"
+            data["status"] = "error"
+            return data
 
     zapier = _load_zapier_file("google_ads.json")
     if zapier and zapier.get("status") != "error":
@@ -420,14 +442,9 @@ def fetch_google_ads(campaign: dict[str, Any]) -> dict[str, Any]:
             loaded["status"] = "ok"
             return loaded
 
-    if os.environ.get("GOOGLE_ADS_DEVELOPER_TOKEN"):
-        data["status"] = "partial"
-        data["error"] = "Google Ads credentials present but campaign ID not configured"
-        return data
-
     data["error"] = (
-        "Google Ads: Zapier MCP not available in cloud agent. "
-        "Pull via Zapier in Desktop Cursor → output/zapier/google_ads.json"
+        "Add Google Ads secrets to Cursor Cloud Secrets (see SECRETS_SETUP.md) "
+        "for fully automated ad metrics."
     )
     return data
 

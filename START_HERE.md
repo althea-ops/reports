@@ -1,51 +1,42 @@
-# Crownsmen Campaign Report
+# Crownsmen Campaign Report — Fully Automated
 
-## Easiest way (2 steps)
+## You're right — it should be automated
 
-### Step 1 — Open this folder in Cursor on your computer
-- Download from GitHub: https://github.com/althea-ops/reports
-- In Cursor: **File → Open Folder** → select the `reports` folder
+Pasting numbers is **not** the normal workflow. The report **is** automated — it just needs your account credentials stored **once** in Cursor.
 
-### Step 2 — Tell the agent one sentence
-Open the **Agent** chat (make sure you're NOT using Cloud Agent) and type:
+## Why [TBD] appeared
+
+The cloud agent that built your report had **zero login credentials**. It could only scrape public YouTube view counts. Everything behind a login (email, ads, YouTube analytics) showed [TBD].
+
+**Zapier on your desktop ≠ Cloud Agent.** They're separate. Cloud agents can't see your desktop Zapier.
+
+## One-time fix (5 minutes) → automated forever
+
+1. Go to **https://cursor.com/dashboard/cloud-agents** → **Secrets**
+2. Add the API tokens listed in **`SECRETS_SETUP.md`**
+3. Click **Update environment**
+4. Run Cloud Agent again with: **`build my report`**
+
+No pasting. No manual steps after that.
+
+## What runs automatically after setup
 
 ```
-build my report
+python3 scripts/build_report.py links.yaml -o output
 ```
 
-That's it. The agent will:
-1. Pull Constant Contact, Google Ads, and YouTube Analytics via your Zapier connection
-2. Build the PowerPoint and PDF
-3. Tell you where to find them
+Pulls from APIs directly:
+- Constant Contact → deliveries, opens, open rate, clicks
+- Google Ads → clicks to URL, landing page URL
+- YouTube Analytics → watch time, retention, geography
+- Public URLs → video views, LinkedIn reactions
 
-Your finished files will be in the **`output/`** folder:
-- `Crownsmen_Partners_Campaign_Performance_Report__CS_67_-_Equify_Financial.pptx`
-- `Crownsmen_Partners_Campaign_Performance_Report__CS_67_-_Equify_Financial.pdf`
+Output: `output/*.pptx` and `output/*.pdf`
+
+## Alternative: Desktop Cursor + Zapier
+
+If you'd rather use Zapier (no API keys): open repo in Desktop Cursor, say **`build my report`**.
 
 ---
 
-## Don't have the repo yet?
-
-Open **Terminal** on your Mac and paste this one line:
-
-```bash
-git clone https://github.com/althea-ops/reports.git ~/reports && cd ~/reports && git checkout cursor/equify-cs67-campaign-report-13d4
-```
-
-Then in Cursor: **File → Open Folder** → choose `reports` (in your home folder).
-
----
-
-## What's already done (no action needed)
-
-The report template is built. YouTube video views are already filled in:
-- Main episode: **52,895 views**
-- 10-slide deck matching the Crownsmen format
-
-What's left (email, Google Ads, YouTube analytics) gets pulled automatically when you say **"build my report"** in Desktop Cursor with Zapier connected.
-
----
-
-## Zapier not connected?
-
-In Cursor: **Settings → Tools & MCP → Connect** next to Zapier. Then say **"build my report"** again.
+**Next step:** Open **`SECRETS_SETUP.md`** and add secrets in the Cursor dashboard.

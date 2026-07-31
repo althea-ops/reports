@@ -7,6 +7,10 @@ campaign:
   guest: Patrick Hoiby, CEO
   report_date: "2026-07-31"
   landing_page: https://www.crownsmen.com/equify-financial-construction-equipment-financing/
+  email_search_terms:
+    - Equify
+    - "CS 67"
+  google_ads_campaign: Equify
 
 youtube:
   main_episode:
