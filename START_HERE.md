@@ -13,7 +13,7 @@ The cloud agent that built your report had **zero login credentials**. It could 
 ## One-time fix (5 minutes) → automated forever
 
 1. Go to **https://cursor.com/dashboard/cloud-agents** → **Secrets**
-2. Add the API tokens listed in **`SECRETS_SETUP.md`**
+2. Add the **OAuth access tokens** listed in **`SECRETS_SETUP.md`** (not API keys)
 3. Click **Update environment**
 4. Run Cloud Agent again with: **`build my report`**
 
