@@ -1,0 +1,306 @@
+/* Campaign Performance Report — corporate presentation styling */
+
+:root {
+  --navy-900: #0b1a2e;
+  --navy-800: #122640;
+  --navy-700: #1a3354;
+  --navy-600: #234568;
+  --gold-500: #c9a227;
+  --gold-400: #d4b44a;
+  --gold-300: #e2c878;
+  --gold-muted: rgba(201, 162, 39, 0.15);
+  --white: #ffffff;
+  --off-white: #f4f6f9;
+  --text-muted: #8fa3bc;
+  --text-body: #c8d4e3;
+  --border-subtle: rgba(201, 162, 39, 0.25);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.28);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: linear-gradient(160deg, var(--navy-900) 0%, #060f1a 100%);
+  color: var(--text-body);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.report {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 2rem 2.5rem;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+
+.report-header {
+  text-align: center;
+  padding: 2.5rem 2rem 2rem;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(135deg, var(--navy-800) 0%, var(--navy-900) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.report-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold-500), var(--gold-300), var(--gold-500));
+}
+
+.report-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 2px;
+  background: var(--gold-500);
+  opacity: 0.6;
+}
+
+.report-header__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+  margin-bottom: 0.75rem;
+}
+
+.report-header__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.report-header__meta {
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.report-header__meta span + span::before {
+  content: "·";
+  margin: 0 0.6rem;
+  color: var(--gold-500);
+  opacity: 0.5;
+}
+
+/* ── Sections ───────────────────────────────────────────── */
+
+.report-section {
+  margin-bottom: 2.5rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-heading__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-500), transparent);
+  opacity: 0.4;
+}
+
+.section-heading__title {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.section-heading__line--right {
+  background: linear-gradient(90deg, transparent, var(--gold-500));
+}
+
+/* ── Metric cards ─────────────────────────────────────────── */
+
+.metrics-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.metrics-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.metrics-grid--email {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.metric-card {
+  background: linear-gradient(160deg, var(--navy-700) 0%, var(--navy-800) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.metric-card:hover {
+  border-color: rgba(201, 162, 39, 0.45);
+  transform: translateY(-2px);
+}
+
+.metric-card__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+  margin-bottom: 0.75rem;
+}
+
+.metric-card__value {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+.metric-card__unit {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+/* ── Email marketing table (secondary detail) ───────────── */
+
+.email-detail {
+  margin-top: 1.25rem;
+  background: var(--navy-800);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.email-detail__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.email-detail__row:last-child {
+  border-bottom: none;
+}
+
+.email-detail__row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.email-detail__label {
+  font-size: 0.875rem;
+  color: var(--text-body);
+}
+
+.email-detail__value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--gold-300);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+
+.report-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.report-footer__brand {
+  color: var(--gold-400);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .report {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .metrics-grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-grid--email {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-grid--email {
+    grid-template-columns: 1fr;
+  }
+
+  .report-header {
+    padding: 2rem 1.25rem 1.5rem;
+  }
+}
+
+@media print {
+  body {
+    background: var(--white);
+    color: #1a1a1a;
+  }
+
+  .report-header,
+  .metric-card,
+  .email-detail {
+    box-shadow: none;
+    border-color: #ccc;
+  }
+
+  .report-header__title,
+  .section-heading__title,
+  .metric-card__value {
+    color: var(--navy-900);
+  }
+
+  .metric-card__label {
+    color: #8b6914;
+  }
+}
