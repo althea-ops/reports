@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Campaign Performance Report</title>
+  <title>{{ report_title }}</title>
   <link rel="stylesheet" href="campaign_performance_report.css">
 </head>
 <body>
   <main class="report">
 
-    <!-- Header -->
     <header class="report-header">
-      <p class="report-header__eyebrow">Crownsmen Partners</p>
-      <h1 class="report-header__title">Campaign Performance Report</h1>
+      <p class="report-header__eyebrow">{{ brand }}</p>
+      <h1 class="report-header__title">{{ report_title }}</h1>
       <p class="report-header__meta">
-        <span>MN 360 — Episode 67</span>
-        <span>August 4, 2026</span>
+        <span>{{ episode_label }}</span>
+        <span>{{ report_date }}</span>
       </p>
     </header>
 
-    <!-- Episode Performance -->
     <section class="report-section episode-performance">
       <div class="section-heading">
         <div class="section-heading__line"></div>
@@ -30,23 +28,22 @@
       <div class="metrics-grid metrics-grid--3">
         <article class="metric-card">
           <p class="metric-card__label">Views</p>
-          <p class="metric-card__value">12,458</p>
+          <p class="metric-card__value">{{ episode.views }}</p>
         </article>
 
         <article class="metric-card">
           <p class="metric-card__label">Avg Percentage Viewed</p>
-          <p class="metric-card__value">42.3%</p>
+          <p class="metric-card__value">{{ episode.avg_percentage_viewed }}</p>
         </article>
 
         <article class="metric-card">
           <p class="metric-card__label">Watch Time</p>
-          <p class="metric-card__value">1,284</p>
+          <p class="metric-card__value">{{ episode.watch_time_hours }}</p>
           <p class="metric-card__unit">hours</p>
         </article>
       </div>
     </section>
 
-    <!-- Email Marketing -->
     <section class="report-section email-marketing">
       <div class="section-heading">
         <div class="section-heading__line"></div>
@@ -57,44 +54,44 @@
       <div class="metrics-grid metrics-grid--email">
         <article class="metric-card">
           <p class="metric-card__label">Delivered</p>
-          <p class="metric-card__value">8,920</p>
+          <p class="metric-card__value">{{ email.delivered }}</p>
         </article>
 
         <article class="metric-card">
           <p class="metric-card__label">Opens</p>
-          <p class="metric-card__value">3,214</p>
+          <p class="metric-card__value">{{ email.opens }}</p>
         </article>
 
         <article class="metric-card">
           <p class="metric-card__label">Open Rate</p>
-          <p class="metric-card__value">36.0%</p>
+          <p class="metric-card__value">{{ email.open_rate }}</p>
         </article>
 
         <article class="metric-card">
           <p class="metric-card__label">Clicks</p>
-          <p class="metric-card__value">487</p>
+          <p class="metric-card__value">{{ email.clicks }}</p>
         </article>
       </div>
 
       <div class="email-detail">
         <div class="email-detail__row">
           <span class="email-detail__label">Click-through Rate</span>
-          <span class="email-detail__value">5.5%</span>
+          <span class="email-detail__value">{{ email.click_through_rate }}</span>
         </div>
         <div class="email-detail__row">
           <span class="email-detail__label">Bounce Rate</span>
-          <span class="email-detail__value">1.2%</span>
+          <span class="email-detail__value">{{ email.bounce_rate }}</span>
         </div>
         <div class="email-detail__row">
           <span class="email-detail__label">Unsubscribes</span>
-          <span class="email-detail__value">12</span>
+          <span class="email-detail__value">{{ email.unsubscribes }}</span>
         </div>
       </div>
     </section>
 
     <footer class="report-footer">
       <p>
-        <span class="report-footer__brand">© 2026 Crownsmen Partners</span>
+        <span class="report-footer__brand">© {{ footer_year }} {{ brand }}</span>
         &nbsp;|&nbsp; www.crownsmen.com &nbsp;|&nbsp; info@crownsmen.com
       </p>
     </footer>

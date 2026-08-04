@@ -103,7 +103,7 @@ def get_analytics_summary(
             ids="channel==MINE",
             startDate=start_date,
             endDate=end_date,
-            metrics="views,averageViewDuration,estimatedMinutesWatched",
+            metrics="views,averageViewDuration,averageViewPercentage,estimatedMinutesWatched",
             filters=f"video=={video_id}",
         )
         .execute()
@@ -115,6 +115,7 @@ def get_analytics_summary(
         return {
             "views": 0,
             "averageViewDuration": 0.0,
+            "averageViewPercentage": 0.0,
             "estimatedMinutesWatched": 0.0,
         }
 
@@ -207,6 +208,10 @@ def fetch_video_metrics(
         "average_view_duration_seconds": round(
             float(analytics_summary["averageViewDuration"]),
             2,
+        ),
+        "average_percentage_viewed": round(
+            float(analytics_summary["averageViewPercentage"]),
+            1,
         ),
         "watch_time_hours": watch_time_hours,
         "views_by_country": {

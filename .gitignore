@@ -1,5 +1,7 @@
 credentials.json
 token.json
+Automated_Campaign_Report.pdf
+output/
 __pycache__/
 *.pyc
 .venv/
