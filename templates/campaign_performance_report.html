@@ -2,100 +2,177 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ report_title }}</title>
+  <title>Campaign Performance Report {{ report.year }}</title>
   <link rel="stylesheet" href="campaign_performance_report.css">
 </head>
 <body>
-  <main class="report">
 
-    <header class="report-header">
-      <p class="report-header__eyebrow">{{ brand }}</p>
-      <h1 class="report-header__title">{{ report_title }}</h1>
-      <p class="report-header__meta">
-        <span>{{ episode_label }}</span>
-        <span>{{ report_date }}</span>
-      </p>
-    </header>
+  {# Slide 1 — Title #}
+  <section class="slide slide--dark">
+    <h1 class="title-slide__heading">
+      Campaign Performance<br>Report {{ report.year }}
+    </h1>
+    <p class="slide-footer">{{ footer }}</p>
+    <p class="title-slide__date">Date Created {{ report.date_created }}</p>
+    <span class="slide-number">1</span>
+  </section>
 
-    <section class="report-section episode-performance">
-      <div class="section-heading">
-        <div class="section-heading__line"></div>
-        <h2 class="section-heading__title">Episode Performance</h2>
-        <div class="section-heading__line section-heading__line--right"></div>
+  {# Slide 2 — Report Content #}
+  <section class="slide slide--light">
+    <h2 class="slide-heading">Report Content</h2>
+    <p class="slide-body-text">Episode Performance {{ report.episode_number }}</p>
+    <span class="slide-number">2</span>
+  </section>
+
+  {# Slide 3 — Promotional Links: Episode Launch #}
+  <section class="slide slide--light">
+    <h2 class="slide-heading">Promotional Links - Episode Launch</h2>
+    <table class="report-table report-table--2col report-table--compact">
+      <colgroup>
+        <col><col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Platform Name</th>
+          <th>URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for link in episode_launch_links %}
+        <tr>
+          <td>{{ link.platform }}</td>
+          <td>{% if link.url %}<a href="{{ link.url }}">{{ link.url }}</a>{% else %}N/A{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <span class="slide-number">3</span>
+  </section>
+
+  {# Slide 4 — Promotional Links: Event #}
+  <section class="slide slide--light">
+    <h2 class="slide-heading">Promotional Links - Event</h2>
+    <table class="report-table report-table--3col report-table--compact">
+      <colgroup>
+        <col><col><col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Content Type</th>
+          <th>Link</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in event_promotion %}
+        <tr>
+          <td>{{ item.content_type }}</td>
+          <td>{% if item.link %}<a href="{{ item.link }}">{{ item.link }}</a>{% else %}N/A{% endif %}</td>
+          <td>{{ item.remarks or "—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <span class="slide-number">4</span>
+  </section>
+
+  {# Slide 5 — Episode Performance divider #}
+  <section class="slide slide--light">
+    <h2 class="slide-heading">Episode Performance</h2>
+    <span class="episode-number">{{ report.episode_section_number }}</span>
+    <span class="slide-number">5</span>
+  </section>
+
+  {# Slide 6 — YouTube Full Episode Statistics #}
+  <section class="slide slide--light">
+    <div class="metric-block">
+      <p class="metric-block__subtitle">YouTube | Full Episode Statistics</p>
+      <p class="metric-block__title">{{ youtube_full.title }}</p>
+      {% for metric in youtube_full.metrics %}
+      <div class="metric-row">
+        <span class="metric-row__label">{{ metric.label }}</span>
+        <span class="metric-row__value">{{ metric.value }}</span>
       </div>
+      {% endfor %}
+    </div>
+    <span class="slide-number">6</span>
+  </section>
 
-      <div class="metrics-grid metrics-grid--3">
-        <article class="metric-card">
-          <p class="metric-card__label">Views</p>
-          <p class="metric-card__value">{{ episode.views }}</p>
-        </article>
-
-        <article class="metric-card">
-          <p class="metric-card__label">Avg Percentage Viewed</p>
-          <p class="metric-card__value">{{ episode.avg_percentage_viewed }}</p>
-        </article>
-
-        <article class="metric-card">
-          <p class="metric-card__label">Watch Time</p>
-          <p class="metric-card__value">{{ episode.watch_time_hours }}</p>
-          <p class="metric-card__unit">hours</p>
-        </article>
+  {# Slide 7 — YouTube Highlight Episode Statistics #}
+  <section class="slide slide--light">
+    <div class="metric-block">
+      <p class="metric-block__subtitle">YouTube | Highlight Episode Statistics</p>
+      <p class="metric-block__title">{{ youtube_highlight.title }}</p>
+      {% for metric in youtube_highlight.metrics %}
+      <div class="metric-row">
+        <span class="metric-row__label">{{ metric.label }}</span>
+        <span class="metric-row__value">{{ metric.value }}</span>
       </div>
-    </section>
+      {% endfor %}
+    </div>
+    <span class="slide-number">7</span>
+  </section>
 
-    <section class="report-section email-marketing">
-      <div class="section-heading">
-        <div class="section-heading__line"></div>
-        <h2 class="section-heading__title">Email Marketing</h2>
-        <div class="section-heading__line section-heading__line--right"></div>
-      </div>
+  {# Slide 8 — YouTube Geography #}
+  <section class="slide slide--light">
+    <h2 class="slide-heading">YouTube | Geography</h2>
+    <table class="report-table report-table--2col">
+      <colgroup>
+        <col><col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Country/Region</th>
+          <th>Views</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in geography %}
+        <tr>
+          <td>{{ row.country }}</td>
+          <td>{{ row.views }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="2">No geography data available.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <span class="slide-number">8</span>
+  </section>
 
-      <div class="metrics-grid metrics-grid--email">
-        <article class="metric-card">
-          <p class="metric-card__label">Delivered</p>
-          <p class="metric-card__value">{{ email.delivered }}</p>
-        </article>
-
-        <article class="metric-card">
-          <p class="metric-card__label">Opens</p>
-          <p class="metric-card__value">{{ email.opens }}</p>
-        </article>
-
-        <article class="metric-card">
-          <p class="metric-card__label">Open Rate</p>
-          <p class="metric-card__value">{{ email.open_rate }}</p>
-        </article>
-
-        <article class="metric-card">
-          <p class="metric-card__label">Clicks</p>
-          <p class="metric-card__value">{{ email.clicks }}</p>
-        </article>
-      </div>
-
-      <div class="email-detail">
-        <div class="email-detail__row">
-          <span class="email-detail__label">Click-through Rate</span>
-          <span class="email-detail__value">{{ email.click_through_rate }}</span>
+  {# Slide 9 — Email Marketing + One-Click Conversion #}
+  <section class="slide slide--light">
+    <div class="two-column">
+      <div class="two-column__panel">
+        <h3 class="panel-heading">Email Marketing</h3>
+        {% for metric in email_marketing.metrics %}
+        <div class="metric-row">
+          <span class="metric-row__label">{{ metric.label }}</span>
+          <span class="metric-row__value">{{ metric.value }}</span>
         </div>
-        <div class="email-detail__row">
-          <span class="email-detail__label">Bounce Rate</span>
-          <span class="email-detail__value">{{ email.bounce_rate }}</span>
-        </div>
-        <div class="email-detail__row">
-          <span class="email-detail__label">Unsubscribes</span>
-          <span class="email-detail__value">{{ email.unsubscribes }}</span>
+        {% endfor %}
+      </div>
+      <div class="two-column__panel">
+        <h3 class="panel-heading">One-Click Conversion Results</h3>
+        <p class="metric-row__label" style="font-weight:600; margin-bottom:0.06in;">URL Used</p>
+        <p class="conversion-url">{{ one_click_conversion.tracking_url }}</p>
+        <div class="metric-row">
+          <span class="metric-row__label">Total # Clicks to Website</span>
+          <span class="metric-row__value">{{ one_click_conversion.total_clicks }}</span>
         </div>
       </div>
-    </section>
+    </div>
+    <span class="slide-number">9</span>
+  </section>
 
-    <footer class="report-footer">
-      <p>
-        <span class="report-footer__brand">© {{ footer_year }} {{ brand }}</span>
-        &nbsp;|&nbsp; www.crownsmen.com &nbsp;|&nbsp; info@crownsmen.com
-      </p>
-    </footer>
+  {# Slide 10 — Thank You #}
+  <section class="slide slide--dark">
+    <p class="thank-you">Thank You!</p>
+    <p class="slide-footer">{{ footer }}</p>
+    <span class="slide-number">10</span>
+  </section>
 
-  </main>
 </body>
 </html>
