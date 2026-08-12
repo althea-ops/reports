@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: crownsmen-reports
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python web_app.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+      - key: PORT
+        value: "10000"
