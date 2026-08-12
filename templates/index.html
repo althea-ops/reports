@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaign Performance Reports</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='campaign_performance_report_web.css') }}">
+</head>
+<body>
+  <div class="landing">
+    <h1>Campaign Performance Reports</h1>
+    <p>Click a report below to view live campaign metrics.</p>
+
+    {% if reports %}
+    <ul style="list-style:none; text-align:left; max-width:480px; margin:0 auto 2rem;">
+      {% for report in reports %}
+      <li style="margin-bottom:0.75rem;">
+        <a href="{{ url_for('view_report', slug=report.slug) }}" class="landing__link" style="display:block;">
+          {{ report.client_name }}
+          {% if report.episode_number %} · Episode {{ report.episode_number }}{% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No reports published yet. Run <code>python publish_report.py</code> to create one.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

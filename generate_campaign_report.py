@@ -9,7 +9,6 @@ from datetime import date, datetime
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from weasyprint import HTML
 
 from youtube_video_report import fetch_video_metrics
 
@@ -171,6 +170,8 @@ def build_report_context(data: dict) -> dict:
             "date_created": fmt_report_date(report.get("date_created")),
             "episode_number": episode_number,
             "episode_section_number": str(report.get("episode_section_number", "1")),
+            "client_name": report.get("client_name"),
+            "show": report.get("show"),
         },
         "footer": data.get("footer", DEFAULT_FOOTER),
         "episode_launch_links": _normalize_episode_launch_links(data),
@@ -202,18 +203,24 @@ def build_report_context(data: dict) -> dict:
     }
 
 
-def render_html(context: dict, templates_dir: Path = TEMPLATES_DIR) -> str:
+def render_html(
+    context: dict,
+    templates_dir: Path = TEMPLATES_DIR,
+    template_name: str = "campaign_performance_report.html",
+) -> str:
     """Render the campaign report HTML string with Jinja2."""
     env = Environment(
         loader=FileSystemLoader(templates_dir),
         autoescape=select_autoescape(["html"]),
     )
-    template = env.get_template("campaign_performance_report.html")
+    template = env.get_template(template_name)
     return template.render(**context)
 
 
 def html_to_pdf(html_string: str, output_path: Path, templates_dir: Path = TEMPLATES_DIR) -> Path:
     """Convert a rendered HTML string to a PDF file using WeasyPrint."""
+    from weasyprint import HTML
+
     HTML(string=html_string, base_url=str(templates_dir)).write_pdf(str(output_path))
     return output_path
 
