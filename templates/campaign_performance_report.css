@@ -1,0 +1,299 @@
+/* Crownsmen Campaign Performance Report — 10-slide deck (matches sample PDF) */
+
+:root {
+  --navy-900: #0b1a2e;
+  --navy-800: #122640;
+  --navy-700: #1a3354;
+  --gold-500: #c9a227;
+  --gold-400: #d4b44a;
+  --gold-300: #e2c878;
+  --white: #ffffff;
+  --off-white: #f7f8fa;
+  --text-dark: #1a2744;
+  --text-muted: #5a6b82;
+  --border-light: #dde3ea;
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+@page {
+  size: 10in 5.625in;
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: var(--font-body);
+  font-size: 11pt;
+  color: var(--text-dark);
+  line-height: 1.4;
+}
+
+/* ── Slide shell ─────────────────────────────────────────── */
+
+.slide {
+  width: 10in;
+  height: 5.625in;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  padding: 0.55in 0.75in 0.65in;
+}
+
+.slide:last-child {
+  page-break-after: auto;
+}
+
+.slide-number {
+  position: absolute;
+  bottom: 0.35in;
+  right: 0.55in;
+  font-size: 9pt;
+  color: var(--text-muted);
+}
+
+.slide-footer {
+  position: absolute;
+  bottom: 0.35in;
+  left: 0.75in;
+  right: 1.2in;
+  font-size: 7.5pt;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ── Title & closing slides (dark) ───────────────────────── */
+
+.slide--dark {
+  background: linear-gradient(145deg, var(--navy-800) 0%, var(--navy-900) 100%);
+  color: var(--white);
+}
+
+.slide--dark::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--gold-500), var(--gold-300), var(--gold-500));
+}
+
+.slide--dark .slide-footer {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.slide--dark .slide-number {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.title-slide__heading {
+  font-family: var(--font-display);
+  font-size: 34pt;
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.15;
+  margin-top: 1.35in;
+  letter-spacing: 0.01em;
+}
+
+.title-slide__date {
+  position: absolute;
+  bottom: 0.85in;
+  left: 0.75in;
+  font-size: 10pt;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.thank-you {
+  font-family: var(--font-display);
+  font-size: 36pt;
+  color: var(--white);
+  text-align: center;
+  margin-top: 1.65in;
+}
+
+/* ── Content slides (light) ──────────────────────────────── */
+
+.slide--light {
+  background: var(--white);
+}
+
+.slide-heading {
+  font-family: var(--font-display);
+  font-size: 22pt;
+  font-weight: 400;
+  color: var(--navy-900);
+  margin-bottom: 0.35in;
+  padding-bottom: 0.12in;
+  border-bottom: 2px solid var(--gold-500);
+}
+
+.slide-subheading {
+  font-size: 13pt;
+  color: var(--text-muted);
+  margin-top: -0.2in;
+  margin-bottom: 0.3in;
+}
+
+.slide-body-text {
+  font-size: 14pt;
+  color: var(--navy-800);
+  margin-top: 1.2in;
+}
+
+/* ── Tables ──────────────────────────────────────────────── */
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8.5pt;
+  table-layout: fixed;
+}
+
+.report-table thead th {
+  background: var(--navy-800);
+  color: var(--white);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.14in 0.12in;
+  letter-spacing: 0.03em;
+}
+
+.report-table tbody td {
+  padding: 0.11in 0.12in;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+.report-table--compact {
+  font-size: 6.5pt;
+}
+
+.report-table--compact thead th {
+  padding: 0.08in 0.1in;
+}
+
+.report-table--compact tbody td {
+  padding: 0.055in 0.1in;
+  line-height: 1.25;
+}
+
+.report-table tbody tr:nth-child(even) td {
+  background: var(--off-white);
+}
+
+.report-table--2col col:nth-child(1) { width: 32%; }
+.report-table--2col col:nth-child(2) { width: 68%; }
+
+.report-table--3col col:nth-child(1) { width: 24%; }
+.report-table--3col col:nth-child(2) { width: 38%; }
+.report-table--3col col:nth-child(3) { width: 38%; }
+
+.report-table a {
+  color: var(--navy-700);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+/* ── Metric rows (label left, value right) ───────────────── */
+
+.metric-block {
+  margin-top: 0.15in;
+}
+
+.metric-block__title {
+  font-size: 13pt;
+  font-weight: 600;
+  color: var(--navy-800);
+  margin-bottom: 0.08in;
+  line-height: 1.35;
+}
+
+.metric-block__subtitle {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--gold-500);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.2in;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.1in 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.metric-row:last-child {
+  border-bottom: none;
+}
+
+.metric-row__label {
+  font-size: 11pt;
+  color: var(--text-dark);
+  flex: 1;
+  padding-right: 0.25in;
+}
+
+.metric-row__value {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--navy-900);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ── Email + conversion split layout ─────────────────────── */
+
+.two-column {
+  display: flex;
+  gap: 0.5in;
+  margin-top: 0.1in;
+}
+
+.two-column__panel {
+  flex: 1;
+}
+
+.panel-heading {
+  font-size: 14pt;
+  font-weight: 700;
+  color: var(--navy-900);
+  margin-bottom: 0.18in;
+  padding-bottom: 0.06in;
+  border-bottom: 1px solid var(--gold-400);
+}
+
+.conversion-url {
+  font-size: 7.5pt;
+  color: var(--navy-700);
+  word-break: break-all;
+  line-height: 1.45;
+  margin: 0.12in 0 0.18in;
+  padding: 0.1in;
+  background: var(--off-white);
+  border-left: 3px solid var(--gold-500);
+}
+
+.episode-number {
+  font-family: var(--font-display);
+  font-size: 72pt;
+  color: var(--gold-500);
+  opacity: 0.35;
+  position: absolute;
+  right: 0.75in;
+  top: 1.1in;
+  line-height: 1;
+}

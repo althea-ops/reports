@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaign Performance Report — {{ report.client_name or report_title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='campaign_performance_report_web.css') }}">
+</head>
+<body>
+
+  <header class="report-banner">
+    <p class="report-banner__eyebrow">Crownsmen Partners</p>
+    <h1 class="report-banner__title">Campaign Performance Report {{ report.year }}</h1>
+    {% if report.client_name %}
+    <p class="report-banner__client">{{ report.client_name }} · {{ report.show or "Mining NOW" }}</p>
+    {% endif %}
+    <p class="report-banner__meta">
+      <span>Episode {{ report.episode_number }}</span>
+      <span>Date Created {{ report.date_created }}</span>
+    </p>
+  </header>
+
+  <main class="report-container">
+
+    {# Episode Performance — key metrics at a glance #}
+    <section class="report-section">
+      <h2 class="section-title">Episode Performance</h2>
+      <p class="section-subtitle">YouTube · Full Episode</p>
+      <p class="video-title">{{ youtube_full.title }}</p>
+      <div class="metrics-grid metrics-grid--3">
+        {% for metric in youtube_full.metrics[:3] %}
+        <article class="metric-card">
+          <p class="metric-card__label">{{ metric.label }}</p>
+          <p class="metric-card__value">{{ metric.value }}</p>
+          {% if metric.label == "Watch Time Hours" %}
+          <p class="metric-card__unit">hours</p>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+      <div class="metric-list" style="margin-top:1.25rem;">
+        {% for metric in youtube_full.metrics[3:] %}
+        <div class="metric-row">
+          <span class="metric-row__label">{{ metric.label }}</span>
+          <span class="metric-row__value">{{ metric.value }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    {# Highlight episode #}
+    <section class="report-section">
+      <h2 class="section-title">Highlight Episode</h2>
+      <p class="section-subtitle">YouTube · Highlight</p>
+      <p class="video-title">{{ youtube_highlight.title }}</p>
+      <div class="metrics-grid metrics-grid--3">
+        {% for metric in youtube_highlight.metrics[:3] %}
+        <article class="metric-card">
+          <p class="metric-card__label">{{ metric.label }}</p>
+          <p class="metric-card__value">{{ metric.value }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      <div class="metric-list" style="margin-top:1.25rem;">
+        {% for metric in youtube_highlight.metrics[3:] %}
+        <div class="metric-row">
+          <span class="metric-row__label">{{ metric.label }}</span>
+          <span class="metric-row__value">{{ metric.value }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    {# Geography #}
+    <section class="report-section">
+      <h2 class="section-title">YouTube Geography</h2>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>Country/Region</th>
+            <th>Views</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in geography %}
+          <tr>
+            <td>{{ row.country }}</td>
+            <td>{{ row.views }}</td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="2">No geography data available.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    {# Email + Conversion #}
+    <section class="report-section">
+      <div class="two-column">
+        <div>
+          <h2 class="section-title">Email Marketing</h2>
+          <div class="metrics-grid metrics-grid--4">
+            {% for metric in email_marketing.metrics %}
+            <article class="metric-card">
+              <p class="metric-card__label">{{ metric.label }}</p>
+              <p class="metric-card__value">{{ metric.value }}</p>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+        <div>
+          <h2 class="section-title">One-Click Conversion</h2>
+          <p class="panel-heading">URL Used</p>
+          <p class="conversion-url">
+            {% if one_click_conversion.tracking_url != "N/A" %}
+            <a href="{{ one_click_conversion.tracking_url }}" target="_blank" rel="noopener">{{ one_click_conversion.tracking_url }}</a>
+            {% else %}
+            N/A
+            {% endif %}
+          </p>
+          <div class="metric-row">
+            <span class="metric-row__label">Total # Clicks to Website</span>
+            <span class="metric-row__value">{{ one_click_conversion.total_clicks }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# Promotional links #}
+    <section class="report-section">
+      <h2 class="section-title">Promotional Links — Episode Launch</h2>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for link in episode_launch_links %}
+          <tr>
+            <td>{{ link.platform }}</td>
+            <td>{% if link.url %}<a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.url }}</a>{% else %}N/A{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    {% if event_promotion %}
+    <section class="report-section">
+      <h2 class="section-title">Promotional Links — Event</h2>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>Content Type</th>
+            <th>Link</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in event_promotion %}
+          <tr>
+            <td>{{ item.content_type }}</td>
+            <td>{% if item.link %}<a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.link }}</a>{% else %}N/A{% endif %}</td>
+            <td>{{ item.remarks or "—" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+    {% endif %}
+
+  </main>
+
+  <footer class="report-footer">
+    <p><span class="report-footer__brand">{{ footer }}</span></p>
+  </footer>
+
+</body>
+</html>

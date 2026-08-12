@@ -1,0 +1,139 @@
+{
+  "report": {
+    "year": 2026,
+    "date_created": "07/17/2026",
+    "client_name": "ProspEx Group",
+    "show": "Mining NOW",
+    "episode_number": "01",
+    "episode_section_number": "1"
+  },
+  "footer": "\u00a9 2018 Crownsmen Partners | www.crownsmen.com | info@crownsmen.com",
+  "episode_launch_links": [
+    {
+      "platform": "YouTube (Full Episode)",
+      "url": "https://youtu.be/h8460qMiK1M"
+    },
+    {
+      "platform": "YouTube (Highlight)",
+      "url": "https://youtu.be/x8vKSSXCzck"
+    },
+    {
+      "platform": "LinkedIn \u2013 Crownsmen Partners",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7468050250084151299"
+    },
+    {
+      "platform": "LinkedIn \u2013 Mining Now",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7468050163564060672"
+    },
+    {
+      "platform": "Facebook",
+      "url": "https://www.facebook.com/crownsmenp/posts/pfbid0gBgLrginrovnJQV7e2aXLppeYGzKTacgw8nqUL4wrwy3JXrjgCu67X5vogxRN1UVl"
+    },
+    {
+      "platform": "Instagram",
+      "url": "https://www.instagram.com/p/DZI6XXLk3oc/"
+    },
+    {
+      "platform": "Threads",
+      "url": "https://www.threads.com/@crownsmenp/post/DZI5F8wE3Yk"
+    },
+    {
+      "platform": "X (Twitter)",
+      "url": "https://x.com/CrownsmenP/status/2062286677910180009"
+    },
+    {
+      "platform": "Spotify",
+      "url": "https://spotifycreators-web.app.link/e/XTUUZOhgG3b"
+    },
+    {
+      "platform": "Rumble",
+      "url": "https://rumble.com/v7arwbs-prospex-pp.html"
+    },
+    {
+      "platform": "Crownsmen Website",
+      "url": "https://www.crownsmen.com/prospex-group-mining-royalties-digital-investment/"
+    },
+    {
+      "platform": "Apple Podcasts",
+      "url": "https://podcasts.apple.com/us/podcast/mn-360-prospex-group-modernizing-how-people-invest/id1365112754"
+    },
+    {
+      "platform": "LinkedIn Newsletter",
+      "url": "https://www.linkedin.com/pulse/prospex-group-modernizes-investment-mining-fractional-nafsc/"
+    },
+    {
+      "platform": "Email",
+      "url": "https://myemail.constantcontact.com/ProspEx-Group--Unlocking-Mining-Royalties-for-a-New-Generation-of-Investors.html"
+    }
+  ],
+  "event_promotion": [
+    {
+      "content_type": "Email (Filming Schedule)",
+      "link": "https://myemail.constantcontact.com/We-re-Live-at-PDAC---Mining-NOW-Is-Filming.html",
+      "remarks": "\u2014"
+    },
+    {
+      "content_type": "Post (Filming Schedule)",
+      "link": "https://www.instagram.com/p/DVWilgPk8MC/",
+      "remarks": "Posted also on Facebook, LinkedIn (Crownsmen Partners, Host Page, Show Page), X (Twitter), Threads, Instagram"
+    },
+    {
+      "content_type": "Behind-the-Scenes Images",
+      "link": "https://www.instagram.com/p/DVZcp4vAcmb/",
+      "remarks": "Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, Instagram"
+    },
+    {
+      "content_type": "Coming Soon Reel",
+      "link": "https://youtube.com/shorts/eA4g4aDOLGs",
+      "remarks": "Posted also on Facebook, LinkedIn (Crownsmen Partners, Sales Lead Page, Show Page), X (Twitter), Threads, TikTok, Instagram"
+    }
+  ],
+  "youtube_full": {
+    "title": "ProspEx Group: Modernizing Investment in Mining with Fractional Royalties #360",
+    "view_count": 25385,
+    "average_percentage_viewed": 39,
+    "average_view_duration": "5:34",
+    "watch_time_hours": 1626,
+    "pct_25_plus": 38,
+    "pct_50_plus": 25,
+    "pct_90_plus": 20
+  },
+  "youtube_highlight": {
+    "title": "The Future of Mining Royalties with ProspEx Group's Digital Investment Platform",
+    "view_count": 2556,
+    "average_percentage_viewed": 79,
+    "average_view_duration": "1:37",
+    "pct_25_plus": 53,
+    "pct_50_plus": 41,
+    "pct_90_plus": 34
+  },
+  "geography": [
+    {
+      "country": "Canada",
+      "views": 8420
+    },
+    {
+      "country": "Australia",
+      "views": 5310
+    },
+    {
+      "country": "United States",
+      "views": 4890
+    },
+    {
+      "country": "United Kingdom",
+      "views": 2140
+    }
+  ],
+  "email_marketing": {
+    "successful_deliveries": 25594,
+    "opens": 4902,
+    "open_rate": 24,
+    "clicks": 116
+  },
+  "one_click_conversion": {
+    "tracking_url": "https://app.prospexgroup.com.au/?utm_source=Crownsmen+Partners&utm_medium=Episode&utm_campaign=One+Click+Conversion",
+    "total_clicks": 76
+  },
+  "slug": "prospex-mn360"
+}
