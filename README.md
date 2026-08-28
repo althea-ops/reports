@@ -38,14 +38,14 @@ Metrics that can't be pulled automatically appear as **[TBD]** in the deck and a
 
 ## Development environment (Cursor Cloud Agents)
 
-The Cloud Agent environment for this repo is managed from the Cursor dashboard
-(Environment panel). Its base image includes **LibreOffice Impress** — required by
-`scripts/build_report.py` to export the deck to PDF — and the setup step installs
-the Python dependencies:
+This repo ships a ready-to-use, versioned Cloud Agent environment in `.cursor/`:
 
-```bash
-pip install --user --break-system-packages -r requirements.txt
-```
+- `.cursor/Dockerfile` — Ubuntu 24.04 base with Python 3.12, `git`/`curl`, and
+  **LibreOffice Impress** (required by `scripts/build_report.py` to export the deck to
+  PDF). Python packages install into an isolated virtualenv at `/opt/venv` (on `PATH`),
+  which avoids the Ubuntu 24.04 PEP 668 "externally-managed" restriction.
+- `.cursor/environment.json` — runs `pip install -r requirements.txt` on setup and
+  prints a credential summary (`scripts/check_credentials.py`) on each start.
 
 ### Local setup
 
