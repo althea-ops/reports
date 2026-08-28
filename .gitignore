@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+
+# Generated report deliverables (rebuilt by scripts/build_report.py)
+output/*.pptx
+output/*.pdf
+output/metrics.json
+output/missing_data.md
